@@ -1,13 +1,22 @@
-EE 460 CDMA Lab 1
+#EE 460 CDMA Lab 1
+
+## Teams
 1C: Cowgill + Morimoto
+
 2C: Grootveld
+
 3C: Hollen + Takehara
 
-Micah / David: [2, 1, -2]
-Brad / Sara: [1, 2, 2]
-Arick: [2, -2, 1]
+## CDMA Encoding
+Team          |    Encoding (Chip?)
+------------- | ---------------
+Micah / David:| [2, 1, -2]
+Brad / Sara:  | [1, 2, 2]
+Arick:        | [2, -2, 1]
 
+## Premable
 PREAMBLE: [3, 3, 3, -3, -3, -3, -3, -3, -3, 3, 3, 3]
 
+## Example Math
 2^2 + (-2)^2 + 1^2 = 9
 
