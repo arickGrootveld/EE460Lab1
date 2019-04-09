@@ -1,4 +1,4 @@
-#EE 460 CDMA Lab 1
+# EE 460 CDMA Lab 1
 
 ## Teams
 1C: Cowgill + Morimoto
