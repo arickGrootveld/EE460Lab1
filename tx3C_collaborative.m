@@ -4,10 +4,10 @@ function output = tx3C_collaborative(bits)
     %%
     % Changeable parameters
     Fs = 44100;
-    carrierFreq = 20;
+    carrierFreq = 5000;
     upSampleRate = 100;
     % Each team should input their own CDMA vector here
-    CDMAVector = [2 -2 1];  
+    CDMAVector = [2 -2 1];
     %% Main code
 
     symbols = bits2PAM(bits);
@@ -20,13 +20,13 @@ function output = tx3C_collaborative(bits)
     pulse = hamming(upSampleRate);
 
     baseBandSignal = filter(pulse,1,upSampledSignal);
-    t = 1/upSampleRate:1/upSampleRate:length(baseBandSignal)/upSampleRate;
+    t = 1/Fs:1/Fs:10;
 
     carrierSignal = cos(2*pi*carrierFreq * t);
-
-    output = carrierSignal .* baseBandSignal;
     
-    output = [output zeros(1, 441000 - length(output))];
+    baseBandSignal = [baseBandSignal zeros(1, 441000 - length(baseBandSignal))];
+    
+    output = carrierSignal .* baseBandSignal;
     
     output = output.';
 end
