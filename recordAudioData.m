@@ -7,13 +7,14 @@ function audioData = recordAudioData()
     disp('Press any key to stop recording...')
     pause;
     stop(r);
-    audioData = getaudiodata(r,'double')';
+    audioData.data = getaudiodata(r,'double')';
+    t=1/fs:1/fs:length(audioData.data)/fs;
+    audioData.time=t;
     fileSaved = false;
     for i = 0:20
         filePre = './data/data';
         fileEnding = '.mat';
         fileName = strcat(filePre, num2str(i), fileEnding);
-        disp(fileName);
         if ((exist(fileName,'file') == 2) || fileSaved == true)
         else
             save(fileName,'audioData');
@@ -21,5 +22,11 @@ function audioData = recordAudioData()
         end
         
     end
+    figure(1);
+    plot(audioData.time,audioData.data);
+    title('received signal');
+    ylabel('amplitude');
+    xlabel('time');
+    
+    
 end
-

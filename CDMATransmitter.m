@@ -5,7 +5,7 @@ function encodedSignal = CDMATransmitter(bits, CDMAVector);
     numSamples = 441000;
     % Changeable parameters
     Fs = 44100;
-    carrierFreq = 5000;
+    carrierFreq = 3000;
     %% Main code
     symbols = bits2PAM(bits);
 
