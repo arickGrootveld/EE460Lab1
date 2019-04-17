@@ -20,11 +20,17 @@ function encodedSignal = CDMATransmitter(bits, CDMAVector);
     % Generating a cosine to modulate our hamming pulse with    
     t = 1/Fs:1/Fs:upSampleRate/Fs;
     modulator = cos(2*pi*carrierFreq*t);
-    pulse = hamming(upSampleRate);
-    pulse = pulse .* modulator.';
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %pulse = hamming(upSampleRate);
+    %pulse = pulse .* modulator.';
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    figure(1);
-    plot(pulse);
+    %%%
+    rand('seed',10);
+    pulse = 2.*rand(1,upSampleRate) - 1;
+    pulse = pulse.' .* modulator.';
+    
+    %%%
     
     baseBandSignal = filter(pulse,1,upSampledSignal);
     

@@ -7,7 +7,7 @@
 % should be the same for all teams within a subgroup.
 
 %% tweakable parameters
-bitsPerTeam=2940;  % number of bits sent by each team
+bitsPerTeam=2;  % number of bits sent by each team
 subgroup='C';      % enter your subgroup letter (A, B, or C)
 
 %% parameters that probably won't change
@@ -29,6 +29,10 @@ for i=1:numTeams
 end
 %% normalize transmit waveform and transmit
 y=y/max(abs(y));
+silence = [zeros(1,88200)];
+y = y.';
+y = [silence y];
+y = y.';
 
 sound(y,fs)
 plot(y)
