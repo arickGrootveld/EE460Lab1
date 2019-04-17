@@ -16,16 +16,20 @@ function encodedSignal = CDMATransmitter(bits, CDMAVector);
     upSampleRate = floor(numSamples/lengthSymbols);
     upSampledSignal = zeros(1,lengthSymbols*upSampleRate);
     upSampledSignal(1:upSampleRate:lengthSymbols*upSampleRate) = CDMASymbols;
+    
+    % Generating a cosine to modulate our hamming pulse with    
+    t = 1/Fs:1/Fs:upSampleRate/Fs;
+    modulator = cos(2*pi*carrierFreq*t);
     pulse = hamming(upSampleRate);
-
+    pulse = pulse .* modulator.';
+    
+    figure(1);
+    plot(pulse);
+    
     baseBandSignal = filter(pulse,1,upSampledSignal);
-    t = 1/Fs:1/Fs:10;
-
-    carrierSignal = cos(2*pi*carrierFreq * t);
     
     baseBandSignal = [baseBandSignal zeros(1, numSamples - length(baseBandSignal))];
     
-    encodedSignal = carrierSignal .* baseBandSignal;
     % Transposing the output to work with Kleins function    
-    encodedSignal = encodedSignal.';
+    encodedSignal = baseBandSignal.';
 end
