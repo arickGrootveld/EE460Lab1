@@ -8,11 +8,21 @@ function encodedSignal = CDMATransmitter(bits, CDMAVector);
     carrierFreq = 3000;
     %% Main code
     symbols = bits2PAM(bits);
+    preamble = [11];
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Allocate space for CDMASymbols output vector
+    output = zeros(1,3*length(symbols));
+    CDMASymbols = zeros(1,(length(output) + length(preamble)));  
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    CDMASymbols = symbols2CDMA(symbols, CDMAVector);
+    % Output vector w/o preamble
+    %CDMASymbols = symbols2CDMA(symbols, CDMAVector); 
+    % Add preamble into CDMA output vector
+    CDMASymbols = [preamble symbols2CDMA(symbols, CDMAVector)];
     lengthSymbols = length(CDMASymbols);
     
-    % Calculating the upsample rate so we use the full window were allowed
+    % Calculating the upsample rate so we use the full window we're allowed
     upSampleRate = floor(numSamples/lengthSymbols);
     upSampledSignal = zeros(1,lengthSymbols*upSampleRate);
     upSampledSignal(1:upSampleRate:lengthSymbols*upSampleRate) = CDMASymbols;
@@ -25,11 +35,14 @@ function encodedSignal = CDMATransmitter(bits, CDMAVector);
     %pulse = pulse .* modulator.';
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    %%%
+    %%% Generate and modulate discrete pulse shape
     rand('seed',10);
     pulse = 2.*rand(1,upSampleRate) - 1;
+    figure(1);
+    plot(pulse)
     pulse = pulse.' .* modulator.';
-    
+    figure(2);
+    plotspec(pulse, 1/Fs)
     %%%
     
     baseBandSignal = filter(pulse,1,upSampledSignal);
