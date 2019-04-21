@@ -1,5 +1,5 @@
 % Show Symbols
-seed = 1234;
+seed = 420420;
 numTeams = 3;
 bitsPerTeam = 10;
 
