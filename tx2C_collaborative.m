@@ -1,4 +1,4 @@
 function output = tx2C_collaborative(bits)
-    cdmaArray = [1 2 2];
+    cdmaArray = [2 -2 1]; % Arick
     output = CDMATransmitter(bits,cdmaArray);
 end
